@@ -1,26 +1,19 @@
 import React from 'react'
-import '../styles/App.css';
 import { useState, useEffect } from 'react';
-// import axios from 'axios';
 
 const App = () => {
- 
- const [name, setName]= useState("");
- const [data , setData]=useState([]);
- 
- useEffect(()=>{
-  fetch("https://www.content.newtonschool.co/v1/main/users")
-   .then((res)=>res.json())
-   .then(({users})=> setName(users));
- });
- 
-//   axios.get(`
-  
- const changeInput=(e)=>{
-  setData(e.target.value);
-  
- }
+  const [name , setName] = useState('');
+  const [id ,setId] = useState(1)
 //code here 
+useEffect(()=>{
+  fetch(`https://content.newtonschool.co/v1/pr/main/users/${id}`).then((resp)=>resp.json()).then((data)=>{
+    console.log(data.name);
+    setName(data.name)
+  })
+} ,[id])
+const changeInput=(e)=>{
+  setId(e.target.value)
+}
  
 
 
@@ -28,7 +21,7 @@ const App = () => {
   return (
     <div className="App">
       <h1 id="text">Type a number between 1 and 10</h1>
-      <input id="input" onChange={changeInput} />
+      <input id="input" onChange={(e)=>changeInput(e)} />
       <p id="name">{name}</p>
     </div>
   );
